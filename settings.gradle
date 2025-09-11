@@ -1,0 +1,6 @@
+rootProject.name = 'flowops'
+
+include 'sdk'
+
+// include 'backend'
+// include 'frontend'
