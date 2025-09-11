@@ -1,0 +1,28 @@
+plugins {
+    id "java"
+    id "maven-publish"
+    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false // for fat jars
+}
+
+allprojects {
+    group = 'com.flowops.plugins'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+tasks.register("buildAllPlugins") {
+    group = "build"
+    description = "Build fat JARs for all plugins"
+
+    dependsOn subprojects.collect { it.tasks.matching { t -> t.name == "shadowJar" } }
+}
+
+tasks.register('publishAllPlugins') {
+    group = "publishing"
+    description = "Publish all plugins to Maven local"
+
+    dependsOn subprojects.collect { it.tasks.matching { t -> t.name == "publishToMavenLocal" } }
+}
