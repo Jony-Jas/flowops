@@ -1,0 +1,47 @@
+plugins {
+    id "java"
+    id "maven-publish"
+    id 'com.github.johnrengelman.shadow'
+}
+
+version = '0.1.0-SNAPSHOT'
+description = 'A simple Hello World plugin for FlowOps'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    withJavadocJar()
+    withSourcesJar()
+}
+
+dependencies {
+    implementation 'com.flowops:sdk:0.1.0-SNAPSHOT'
+}
+
+tasks.named('shadowJar') {
+    manifest {
+        attributes(
+            'Main-Class': 'com.flowops.helloworld.HelloWorldTask'
+        )
+    }
+    // This creates the -all.jar file
+    archiveClassifier.set('all')
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact tasks.named('shadowJar')
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
