@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.flowops'
+group = 'com.flowops.sdk'
 version = '0.1.0-SNAPSHOT'
 
 java {
