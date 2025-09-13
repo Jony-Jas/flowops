@@ -2,7 +2,7 @@ version: "3.9"
 services:
   mongodb:
     image: mongo:6.0
-    container_name: taskservice-mongodb
+    container_name: pluginservice-mongodb
     ports:
       - "${MONGO_PORT}:27017"
     environment:
@@ -12,7 +12,7 @@ services:
 
   minio:
     image: minio/minio
-    container_name: taskservice-minio
+    container_name: pluginservice-minio
     environment:
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
@@ -37,6 +37,7 @@ services:
       MINIO_URL: ${MINIO_URL}
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
 
 volumes:
   mongo_data:
