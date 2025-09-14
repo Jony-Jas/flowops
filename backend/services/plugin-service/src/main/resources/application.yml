@@ -1,3 +1,7 @@
 spring:
     application:
         name: plugin-service
+
+grpc:
+  server:
+    port: 9090

@@ -22,6 +22,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -29,6 +30,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.minio:minio:8.5.7'
+
+    // Grpc dependencies
+    implementation "com.flowops.common:grpc-contracts:0.1.0-SNAPSHOT"
+    implementation 'net.devh:grpc-spring-boot-starter:2.15.0.RELEASE'
     
     // MapStruct dependencies
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'

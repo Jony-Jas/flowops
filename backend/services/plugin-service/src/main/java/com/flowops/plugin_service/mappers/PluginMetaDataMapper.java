@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import com.flowops.plugin_service.domain.entities.PluginMetaData;
 import com.flowops.plugin_service.dtos.PluginMetaDataGetDto;

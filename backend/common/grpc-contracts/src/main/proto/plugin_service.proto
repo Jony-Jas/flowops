@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package com.flowops.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.flowops.common.grpc";
+
+import "google/protobuf/empty.proto";
+
+enum PluginIOType {
+  INTEGER = 0;
+  FLOAT = 1;
+  STRING = 2;
+  BOOLEAN = 3;
+}
+
+message PluginIO {
+  string name = 1;
+  PluginIOType type = 2;
+}
+
+message PluginJarResponse {
+  bytes jar = 1;
+}
+
+message PluginMetadata {
+  string id = 1;
+  string pluginId = 2;
+  string version = 3;
+  string description = 4;
+  string author = 5;
+  string uploadTime = 6;
+  repeated PluginIO inputs = 7;
+  repeated PluginIO outputs = 8;
+  string jarFileUrl = 9;
+}
+
+message PluginRequest {
+  string pluginId = 1;
+  string id = 2; // UUID for specific version
+}
+
+service PluginService {
+  rpc GetPluginMetadata(PluginRequest) returns (PluginMetadata);
+  rpc GetPluginJar(PluginRequest) returns (PluginJarResponse); // raw jar stream
+}

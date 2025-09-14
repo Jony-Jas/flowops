@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id 'com.google.protobuf' version '0.9.4'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "io.grpc:grpc-stub:1.64.0"
+    implementation "io.grpc:grpc-protobuf:1.64.0"
+    implementation "com.google.protobuf:protobuf-java:3.25.1"
+
+    compileOnly "org.apache.tomcat:annotations-api:6.0.53" // for javax annotations
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.1"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.64.0"
+        }
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins {
+                grpc {}
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = "com.flowops.common"
+            artifactId = "grpc-contracts"
+            version = "0.1.0-SNAPSHOT"
+        }
+    }
+    repositories {
+        mavenLocal() // publish to local .m2 repo
+    }
+}

@@ -32,6 +32,7 @@ services:
       - minio
     ports:
       - "${PLUGIN_SERVICE_PORT}:8080"
+      - "${PLUGIN_SERVICE_GRPC_PORT}:9090"
     environment:
       SPRING_DATA_MONGODB_URI: ${MONGO_URI}
       MINIO_URL: ${MINIO_URL}
