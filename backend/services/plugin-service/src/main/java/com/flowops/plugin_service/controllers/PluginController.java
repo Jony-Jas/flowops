@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flowops.plugin_service.dtos.PluginMetaDataGetDto;
 import com.flowops.plugin_service.dtos.PluginMetaDataPostDto;
-import com.flowops.plugin_service.dtos.Response.ApiResponse;
 import com.flowops.plugin_service.mappers.PluginMetaDataMapper;
 import com.flowops.plugin_service.services.PluginService;
+import com.flowops.shared_api.dto.ApiResponse;
 
 import jakarta.validation.Valid;
 

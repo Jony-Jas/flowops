@@ -9,8 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.flowops.plugin_service.dtos.Response.ApiResponse;
-import com.flowops.plugin_service.dtos.Response.ErrorDetail;
+import com.flowops.shared_api.dto.ApiResponse;
+import com.flowops.shared_api.dto.ErrorDetail;
 
 import lombok.extern.slf4j.Slf4j;
 

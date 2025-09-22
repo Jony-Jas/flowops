@@ -31,6 +31,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.minio:minio:8.5.7'
 
+    implementation "com.flowops.common:shared-api:0.1.0-SNAPSHOT"
+
     // Grpc dependencies
     implementation "com.flowops.common:grpc-contracts:0.1.0-SNAPSHOT"
     implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
