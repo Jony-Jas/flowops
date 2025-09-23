@@ -1,0 +1,46 @@
+topics:
+  execution.commands:
+    description: "Commands to control execution lifecycle"
+    keySchema: "string"      # runId
+    valueSchema: "ExecutionCommandEvent"
+    partitions: 3
+    replicationFactor: 2
+    producers:
+      - execution-service
+    consumers:
+      - execution-engine
+
+  execution.status:
+    description: "Status updates from execution engine back to execution-service and clients"
+    keySchema: "string"      # runId
+    valueSchema: "ExecutionStatusEvent"
+    partitions: 3
+    replicationFactor: 2
+    producers:
+      - execution-engine
+    consumers:
+      - execution-service
+
+schemas:
+  ExecutionCommandEvent:
+    fields:
+      - { name: eventType, type: string, enum: [EXECUTION_START, EXECUTION_STOP, EXECUTION_PAUSE, EXECUTION_RESUME] }
+      - { name: flowId, type: string }
+      - { name: runId, type: string }
+      - { name: triggeredBy, type: string }
+      - { name: timestamp, type: string }
+
+  ExecutionStatusEvent:
+    fields:
+      - { name: eventType, type: string, enum: [EXECUTION_STATUS] }
+      - { name: flowId, type: string }
+      - { name: runId, type: string }
+      - { name: status, type: string, enum: [PENDING, RUNNING, PAUSED, COMPLETED, FAILED, STOPPED] }
+      - name: stepUpdates
+        type: array
+        items:
+          - { name: stepId, type: string }
+          - { name: status, type: string, enum: [PENDING, RUNNING, COMPLETED, FAILED, SKIPPED, CANCELLED] }
+          - { name: error, type: string }
+      - { name: error, type: string }
+      - { name: timestamp, type: string }
