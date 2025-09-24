@@ -11,9 +11,9 @@ topics:
       - execution-engine
 
   execution.status:
-    description: "Status updates from execution engine back to execution-service and clients"
+    description: "Status updates from execution engine (flow-level and step-level)"
     keySchema: "string"      # runId
-    valueSchema: "ExecutionStatusEvent"
+    valueSchema: "FlowStatusEvent | StepStatusEvent"
     partitions: 3
     replicationFactor: 2
     producers:
@@ -30,17 +30,21 @@ schemas:
       - { name: triggeredBy, type: string }
       - { name: timestamp, type: string }
 
-  ExecutionStatusEvent:
+  FlowStatusEvent:
     fields:
-      - { name: eventType, type: string, enum: [EXECUTION_STATUS] }
+      - { name: eventType, type: string, enum: [FLOW_STATUS] }
       - { name: flowId, type: string }
       - { name: runId, type: string }
       - { name: status, type: string, enum: [PENDING, RUNNING, PAUSED, COMPLETED, FAILED, STOPPED] }
-      - name: stepUpdates
-        type: array
-        items:
-          - { name: stepId, type: string }
-          - { name: status, type: string, enum: [PENDING, RUNNING, COMPLETED, FAILED, SKIPPED, CANCELLED] }
-          - { name: error, type: string }
+      - { name: error, type: string }
+      - { name: timestamp, type: string }
+
+  StepStatusEvent:
+    fields:
+      - { name: eventType, type: string, enum: [STEP_STATUS] }
+      - { name: flowId, type: string }
+      - { name: runId, type: string }
+      - { name: stepId, type: string }
+      - { name: status, type: string, enum: [PENDING, RUNNING, COMPLETED, FAILED, SKIPPED, CANCELLED] }
       - { name: error, type: string }
       - { name: timestamp, type: string }
