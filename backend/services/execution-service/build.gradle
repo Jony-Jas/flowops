@@ -30,9 +30,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 	implementation "com.flowops.common:shared-api:0.1.0-SNAPSHOT"
 	implementation "com.flowops.common:kafka-contracts:0.1.0-SNAPSHOT"
+
+	// Jackson Java 8 Date/Time support
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 	// MapStruct dependencies
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'

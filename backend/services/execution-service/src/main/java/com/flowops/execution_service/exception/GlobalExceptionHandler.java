@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(ex.getMessage(), "INVALID_REQUEST"));
     }
 
+    // TODO: fix valid exception message
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException ex) {
 
