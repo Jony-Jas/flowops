@@ -3,6 +3,7 @@ package com.flowops.execution_service.controller;
 import com.flowops.execution_service.dto.flow.FlowDetailResponse;
 import com.flowops.execution_service.dto.flow.FlowRequest;
 import com.flowops.execution_service.dto.flow.FlowResponse;
+import com.flowops.execution_service.mapper.FlowUpdateRequest;
 import com.flowops.execution_service.service.ExecutionService;
 import com.flowops.shared_api.dto.ApiResponse;
 
@@ -49,7 +50,7 @@ public class FlowController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<FlowResponse>> updateFlow(
             @PathVariable UUID id,
-            @Valid @RequestBody FlowRequest request,
+            @Valid @RequestBody FlowUpdateRequest request,
             @RequestHeader("X-User-Id") UUID ownerId
     ) {
         FlowResponse response = executionService.updateFlow(id, request, ownerId);

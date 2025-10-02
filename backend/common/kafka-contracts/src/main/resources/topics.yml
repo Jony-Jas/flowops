@@ -29,6 +29,29 @@ schemas:
       - { name: runId, type: string }
       - { name: triggeredBy, type: string }
       - { name: timestamp, type: string }
+      - name: steps
+        type: array
+        optional: true
+        items:
+          - { name: stepId, type: string }
+          - { name: pluginId, type: string }
+          - { name: type, type: string, enum: [ACTION, DECISION] }
+          - { name: inputs, type: map, keyType: string, valueType: string }
+          - { name: outputs, type: map, keyType: string, valueType: string }
+          - { name: condition, type: string }
+          - name: branches
+            type: array
+            items:
+              - { name: branchId, type: string }
+              - { name: condition, type: string }
+              - { name: steps, type: array }   # recursive
+          - { name: children, type: array }   # recursive
+          - name: config
+            type: object
+            fields:
+              - { name: timeoutMs, type: int }
+              - { name: retryCount, type: int }
+              - { name: retryDelayMs, type: int }
 
   FlowStatusEvent:
     fields:

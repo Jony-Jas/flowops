@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.kafka.annotation.KafkaListener;
@@ -49,23 +51,32 @@ public class KafkaStatusConsumer {
     private void handleFlowStatus(FlowStatusEvent event) {
         runRepository.findById(UUID.fromString(event.getRunId())).ifPresent(run -> {
             run.setStatus(Run.RunStatus.valueOf(event.getStatus().name()));
-            run.setUpdatedAt(event.getTimestamp());
+            run.setUpdatedAt(event.getTimestamp() != null ? event.getTimestamp() : Instant.now());
+            if (event.getError() != null) {
+                run.setError(event.getError());
+            }
             runRepository.save(run);
         });
     }
 
     private void handleStepStatus(StepStatusEvent event) {
-        runRepository.findById(UUID.fromString(event.getRunId())).ifPresent(run -> {
-            run.getSteps().stream()
-                .filter(step -> step.getStepId().equals(UUID.fromString(event.getStepId())))
+        Optional<Run> runOpt = runRepository.findById(UUID.fromString(event.getRunId()));
+        if (runOpt.isEmpty()) return;
+
+        Run run = runOpt.get();
+
+        run.getSteps().stream()
+                .filter(step -> step.getStepId().toString().equals(event.getStepId()))
                 .findFirst()
                 .ifPresent(step -> {
                     step.setStatus(Run.StepStatus.valueOf(event.getStatus().name()));
                     step.setError(event.getError());
-                    step.setCompletedAt(event.getTimestamp());
+                    if (event.getTimestamp() != null) {
+                        step.setCompletedAt(event.getTimestamp());
+                    }
                 });
-            run.setUpdatedAt(event.getTimestamp());
-            runRepository.save(run);
-        });
+
+        run.setUpdatedAt(event.getTimestamp() != null ? event.getTimestamp() : Instant.now());
+        runRepository.save(run);
     }
 }
