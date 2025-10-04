@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  keycloak:
+    image: ${KEYCLOAK_IMAGE}
+    container_name: flowops-keycloak
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HTTP_PORT: 8090
+    ports:
+      - "9080:8090"
+    volumes:
+      - ./keycloak/realms/:/opt/keycloak/data/import/
+
+  auth-service:
+    build: .
+    image: auth-service:latest
+    container_name: flowops-auth-service
+    ports:
+      - "${AUTH_SERVICE_PORT}:8080"
+    env_file:
+      - .env
+    environment:
+      - KEYCLOAK_BASE_URL=${KEYCLOAK_BASE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
+      - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
+    depends_on:
+      - keycloak

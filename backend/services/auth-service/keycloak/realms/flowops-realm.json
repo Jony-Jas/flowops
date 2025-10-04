@@ -1,0 +1,69 @@
+{
+  "realm": "flowops",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      { "name": "admin", "description": "Administrator role" },
+      { "name": "user", "description": "Default user role" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "flowops-auth",
+      "name": "FlowOps Auth Service",
+      "description": "Client used by AuthService for JWT verification and issuance",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "super-secret-key",
+      "serviceAccountsEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "authorizationServicesEnabled": false,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "300",
+        "refresh.token.lifespan": "1800",
+        "post.logout.redirect.uris": "+"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "devuser",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "devuser@flowops.local",
+      "firstName": "Dev",
+      "lastName": "User",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "devpass",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["user"]
+    }
+  ],
+  "groups": [],
+  "defaultRoles": ["user"],
+  "eventsEnabled": true,
+  "adminEventsEnabled": true,
+  "internationalizationEnabled": true,
+  "supportedLocales": ["en"],
+  "defaultLocale": "en"
+}
