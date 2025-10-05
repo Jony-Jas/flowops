@@ -9,6 +9,8 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_DB}
     volumes:
       - mongo_data:/data/db
+    networks:
+      - flowops-net
 
   minio:
     image: minio/minio
@@ -22,6 +24,8 @@ services:
       - "${MINIO_CONSOLE_PORT}:9001"
     volumes:
       - minio_data:/data
+    networks:
+      - flowops-net
 
   plugin-service:
     build: .
@@ -39,7 +43,13 @@ services:
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
       MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+    networks:
+      - flowops-net
 
 volumes:
   mongo_data:
   minio_data:
+
+networks:
+  flowops-net:
+    external: true
