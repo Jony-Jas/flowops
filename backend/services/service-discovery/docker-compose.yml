@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  service-discovery:
+    build: .
+    image: service-discovery:latest
+    container_name: flowops-service-discovery
+    ports:
+      - "8761:8761"
+    networks:
+      - flowops-net
+
+networks:
+  flowops-net:
+    external: true
