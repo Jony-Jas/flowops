@@ -5,3 +5,18 @@ spring:
 keycloak:
   token-url: ${KEYCLOAK_TOKEN_URL:http://keycloak:8080/realms/flowops/protocol/openid-connect/token}
   jwks-url: ${KEYCLOAK_JWKS_URL:http://keycloak:8080/realms/flowops/protocol/openid-connect/certs}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://flowops-service-discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+cloud:
+    discovery:
+      client:
+        simple:
+          lower-case-service-id: true

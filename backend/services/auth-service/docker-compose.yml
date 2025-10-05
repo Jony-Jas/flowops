@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+  # 🧑‍💼 Keycloak Identity Provider
   keycloak:
     image: ${KEYCLOAK_IMAGE}
     container_name: flowops-keycloak
@@ -15,13 +16,17 @@ services:
       - "9080:8090"
     volumes:
       - ./keycloak/realms/:/opt/keycloak/data/import/
+    networks:
+      - flowops-net
 
+  # 🔐 Auth Service (Spring Boot)
   auth-service:
-    build: .
+    build:
+      context: .
     image: auth-service:latest
-    container_name: flowops-auth-service
+    container_name: auth-service
     ports:
-      - "${AUTH_SERVICE_PORT}:8080"
+      - "${AUTH_SERVICE_PORT:-8084}:8080"
     env_file:
       - .env
     environment:
@@ -29,5 +34,12 @@ services:
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
       - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
+
     depends_on:
       - keycloak
+    networks:
+      - flowops-net
+
+networks:
+  flowops-net:
+    external: true
