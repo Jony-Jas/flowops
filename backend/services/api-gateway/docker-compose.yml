@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  api-gateway:
+    build:
+      context: .
+    image: api-gateway:latest
+    container_name: flowops-gateway
+    ports:
+      - "8085:8080"
+    environment:
+      - AUTH_VERIFY_URL=http://auth-service:8084/auth/verify
+
+    networks:
+      - flowops-net
+
+networks:
+  flowops-net:
+    external: true

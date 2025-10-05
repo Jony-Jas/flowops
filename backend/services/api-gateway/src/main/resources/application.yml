@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+          routes:
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth/**
+            - id: plugin-service
+              uri: lb://plugin-service
+              predicates:
+                - Path=/plugins/**
+            - id: execution-service
+              uri: lb://execution-service
+              predicates:
+                - Path=/execution/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://flowops-service-discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+auth:
+  verify-url: http://auth-service:8084/auth/verify
