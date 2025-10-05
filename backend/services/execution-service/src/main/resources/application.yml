@@ -1,3 +1,18 @@
 spring:
     application:
         name: execution-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://flowops-service-discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+cloud:
+    discovery:
+      client:
+        simple:
+          lower-case-service-id: true
