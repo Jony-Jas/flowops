@@ -1,4 +1,4 @@
-# 🌊 FlowOps Platform
+# <img width="50" height="50" alt="flowops-logo" src="https://github.com/Jony-Jas/flowops/blob/main/assets/flowops-logo-small.PNG" /> FlowOps Platform
 
 FlowOps is a modular, event-driven workflow automation platform that enables building, orchestrating, and running pluggable tasks across distributed microservices.
 
