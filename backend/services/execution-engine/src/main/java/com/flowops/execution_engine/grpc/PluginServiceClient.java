@@ -15,7 +15,7 @@ public class PluginServiceClient {
     private final PluginServiceGrpc.PluginServiceBlockingStub blockingStub;
 
     public PluginServiceClient(@Value("${pluginservice.host:plugin-service}") String host,
-                               @Value("${pluginservice.port:9001}") int port) {
+                               @Value("${pluginservice.port:9091}") int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         this.blockingStub = PluginServiceGrpc.newBlockingStub(channel);
     }

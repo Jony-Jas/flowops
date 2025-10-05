@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.flowops.execution_engine.model.Step;
 
 /**
@@ -18,6 +20,7 @@ import com.flowops.execution_engine.model.Step;
  * The adjacency map is dependency -> set(dependents).
  * The indegree map is dependent -> number of unresolved dependencies.
  */
+@Component
 public class DAGBuilder {
 
     // regex captures stepId.outputKey optionally wrapped in ${...}

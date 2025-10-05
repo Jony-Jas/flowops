@@ -1,5 +1,13 @@
 package com.flowops.execution_engine.persistence.redis;
 
+// flow:{flowId}:{runId}:meta            -> Hash { status, startedAt, pausedAt, lastUpdated }
+// flow:{flowId}:{runId}:steps           -> Hash mapping stepId -> status (PENDING/RUNNING/COMPLETED/FAILED/SKIPPED)
+// flow:{flowId}:{runId}:step:{stepId}:outputs -> Hash of outputs (outputKey -> JSON string value)
+// flow:{flowId}:{runId}:context         -> Hash of "stepId.outputKey" -> serialized value
+// flow:{flowId}:{runId}:dag:indegree   -> Hash of stepId -> integer (remaining deps)
+// flow:{flowId}:{runId}:dag:adj         -> Redis Set per step: dag:{stepId}:dependents (set of stepIds)
+// flow:{flowId}:{runId}:queue           -> List (or Stream) of ready stepIds
+
 public final class RedisKeys {
     private RedisKeys() {}
 

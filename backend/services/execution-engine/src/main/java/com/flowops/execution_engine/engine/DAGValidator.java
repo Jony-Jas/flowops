@@ -2,10 +2,13 @@ package com.flowops.execution_engine.engine;
 
 import java.util.*;
 
+import org.springframework.stereotype.Component;
+
 /**
  * DAG validator utilities.
  * Uses Kahn's algorithm to detect cycles; additionally verifies indegree/adjaency sizes.
  */
+@Component
 public class DAGValidator {
 
     /**

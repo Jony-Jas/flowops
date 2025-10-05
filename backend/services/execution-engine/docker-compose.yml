@@ -6,6 +6,8 @@ services:
     ports:
       - "${REDIS_PORT:-6379}:6379"
     command: ["redis-server", "--save", "", "--appendonly", "no"]
+    networks:
+      - flowops-net
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -17,6 +19,8 @@ services:
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    networks:
+      - flowops-net
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
@@ -38,13 +42,14 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
     volumes:
       - kafka_data:/var/lib/kafka/data
+    networks:
+      - flowops-net
 
   execution-engine:
     build: .
     image: execution-engine:latest
     container_name: execution-engine
     depends_on:
-      - kafka
       - redis
     ports:
       - "${EXECUTION_ENGINE_PORT}:8080"
@@ -53,5 +58,12 @@ services:
       SPRING_REDIS_HOST: ${REDIS_HOST:-redis}
       SPRING_REDIS_PORT: ${REDIS_PORT:-6379}
       SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BROKER:-kafka:9092}
+    networks:
+      - flowops-net
+
 volumes:
   kafka_data:
+
+networks:
+  flowops-net:
+    external: true

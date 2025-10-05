@@ -7,3 +7,18 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://flowops-service-discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+cloud:
+    discovery:
+      client:
+        simple:
+          lower-case-service-id: true
