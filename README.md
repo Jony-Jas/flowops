@@ -15,8 +15,7 @@ All services are discoverable through **Eureka** and protected by a unified **Au
 ---
 
 ## 📘 Diagram:
-
-See `docs/Project-backend-Architecture.png`
+<img width="703" height="733" alt="architecture" src="https://github.com/Jony-Jas/flowops/blob/main/docs/architecture.png" />
 
 ---
 
